@@ -41,7 +41,7 @@ function App() {
         <Chat socket={socket} username={username} room={room} />
       )}
 
-      <footer>Crafted with ❤ by Prajwal</footer>
+      <footer>Crafted with ❤ by Olawale and Akshay</footer>
     </div>
   );
 }
