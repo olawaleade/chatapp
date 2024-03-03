@@ -1,0 +1,41 @@
+name: build and push image (developer)
+on:
+  push:
+    branches: 
+      deploy
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the repository
+        uses: actions/checkout@v2
+      - name: get in the folder
+        run: cd client/ && ls
+      - name: timestamp for tag
+        id: timestamp
+        run: echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
+      - name: build the image
+        run: |
+          docker build -t chat-app-fe:${{ steps.timestamp.outputs.timestamp }} .
+          docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_USERNAME}}
+          docker push chat-app-fe:${{ steps.timestamp.outputs.timestamp }} 
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the repository
+        uses: actions/checkout@v2
+      - name: get in the folder
+        run: cd server/ && ls
+      - name: timestamp for tag
+        id: timestamp
+        run: echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
+      - name: build the image
+        run: |
+          docker build -t chat-app-be:${{ steps.timestamp.outputs.timestamp }} .
+          docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_USERNAME}}
+          docker push chat-app-be:${{ steps.timestamp.outputs.timestamp }}
+
+
+
+
