@@ -24,7 +24,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push : true
-          tags: chat-app-fe:${{ steps.timestamp.outputs.timestamp }}
+          tags: aksrao1998/chat-app-fe:${{ steps.timestamp.outputs.timestamp }}
   # build-backend:
   #   runs-on: ubuntu-latest
   #   steps:
