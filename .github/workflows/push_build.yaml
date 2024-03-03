@@ -25,21 +25,26 @@ jobs:
           file: ./client/Dockerfile
           push : true
           tags: aksrao1998/chat-app-fe:${{ steps.timestamp.outputs.timestamp }}
-  # build-backend:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: checkout the repository
-  #       uses: actions/checkout@v2
-  #     - name: get in the folder
-  #       run: cd server/ && ls
-  #     - name: timestamp for tag
-  #       id: timestamp
-  #       run: echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
-  #     - name: build the image
-  #       run: |
-  #         docker build -t chat-app-be:${{ steps.timestamp.outputs.timestamp }} .
-  #         docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASS}}
-  #         docker push chat-app-be:${{ steps.timestamp.outputs.timestamp }}
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout the repository
+        uses: actions/checkout@v2
+      - name: docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKER_USER}}
+          password: ${{secrets.DOCKER_PASS}}
+      - name: timestamp for tag
+        id: timestamp
+        run: echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
+      - name: build and push the image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          file: Dockerfile
+          push : true
+          tags: aksrao1998/chat-app-be:${{ steps.timestamp.outputs.timestamp }}
 
 
 
