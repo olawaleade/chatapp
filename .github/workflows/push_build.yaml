@@ -20,7 +20,6 @@ jobs:
           password: ${{secrets.DOCKER_PASS}}
       - name: build and push the image
         uses: docker/build-push-action@v5
-        run: pwd
         with:
           context: ./client
           file: ./client/Dockerfile
