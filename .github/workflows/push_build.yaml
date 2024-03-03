@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: checkout the repository
         uses: actions/checkout@v2
-      - name: get in the folder
-        run: cd client/ && ls
       - name: timestamp for tag
         id: timestamp
         run: echo "::set-output name=timestamp::$(date +'%Y%m%d%H%M%S')"
@@ -22,8 +20,10 @@ jobs:
           password: ${{secrets.DOCKER_PASS}}
       - name: build and push the image
         uses: docker/build-push-action@v5
+        run: pwd
         with:
-          context: .
+          context: ./client
+          file: ./client/Dockerfile
           push : true
           tags: chat-app-fe:${{ steps.timestamp.outputs.timestamp }}
   # build-backend:
