@@ -2,7 +2,7 @@ name: build and push image (developer)
 on:
   push:
     branches: 
-      deploy
+      main
 
 jobs:
   build-frontend:
