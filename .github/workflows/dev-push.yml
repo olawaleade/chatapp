@@ -1,7 +1,9 @@
-name: Build and Push Docker Images for Infra
+name: Build and Push Docker Images for Dev
+
 on:
-  repository_dispatch:
-    types: [my-event]
+  push:
+    branches:
+      - deploy
 
 jobs:
   build-and-push:
