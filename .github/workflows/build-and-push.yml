@@ -18,7 +18,7 @@ jobs:
 
       - name: Get Timestamp
         id: timestamp
-        run: echo "::set-output name=timestamp::$(date + '%Y%m%d%H%M%S')"
+        run: echo "::set-output name=timestamp::$(date +%Y%m%d%H%M%S)"
 
       - name: Build and Push Backend Docker Image
         uses: docker/build-push-action@v5
@@ -26,7 +26,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: olawde/chat-ba:${{ steps.timestamp.outputs.timestamp }}
+          tags: olawde/backend:${{ steps.timestamp.outputs.timestamp }}
 
       - name: Build and Push Frontend Docker Image
         uses: docker/build-push-action@v5
@@ -34,7 +34,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: olawde/chat-fr:${{ steps.timestamp.outputs.timestamp }}
+          tags: olawde/frontend:${{ steps.timestamp.outputs.timestamp }}
           
       - name: Dispatch Success Event
         if: ${{success() }}
