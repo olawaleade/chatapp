@@ -26,7 +26,7 @@ jobs:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: olawde/backend:${{ steps.timestamp.outputs.timestamp }}
+          tags: olawde/chat-backend:${{ steps.timestamp.outputs.timestamp }}
 
 
       - name: Build and Push Frontend Docker Image
@@ -35,7 +35,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: olawde/frontend:${{ steps.timestamp.outputs.timestamp }}
+          tags: olawde/chat-frontend:${{ steps.timestamp.outputs.timestamp }}
           
       - name: Dispatch Success Event
         if: ${{success() }}
