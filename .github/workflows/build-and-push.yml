@@ -46,5 +46,6 @@ jobs:
         uses: peter-evans/repository_dispatch@v3
         with:
           token: ${{ secrets.TOKEN_TO_TRIGGER }}
+          repository: olawaleade/helm
           event-type: success-event
           client-payload: '{"message": "Build and push successful"}'
