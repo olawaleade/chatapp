@@ -16,13 +16,17 @@ jobs:
           username: ${{secrets.DOCKERHUB_USERNAME}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
 
+      - name: Get Timestamp
+        id: timestamp
+        run: echo "::set-output name=timestamp::$(date + %Y%m%d%H%M%S)"
+
       - name: Build and Push Backend Docker Image
         uses: docker/build-push-action@v5
         with:
           context: ./server
           file: ./server/Dockerfile
           push: true
-          tags: olawde/backend:latest
+          tags: olawde/backend:${{ steps.timestamp.outputs.timestamp }}
 
 
       - name: Build and Push Frontend Docker Image
@@ -31,7 +35,7 @@ jobs:
           context: ./client
           file: ./client/Dockerfile
           push: true
-          tags: olawde/frontend:latest
+          tags: olawde/frontend:${{ steps.timestamp.outputs.timestamp }}
           
       - name: Dispatch Success Event
         if: ${{success() }}
