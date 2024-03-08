@@ -1,8 +1,7 @@
 name: Build and Push Docker Images for Infra
 on:
-  push:
-    branches:
-      - deploy
+  repository_dispatch:
+    types: [my-event]
 
 jobs:
   build-and-push:
