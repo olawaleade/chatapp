@@ -36,12 +36,16 @@ jobs:
           push: true
           tags: olawde/frontend:${{ steps.timestamp.outputs.timestamp }}
 
+  trigger-repo-b:
+    needs: build-and-push
+    runs-on: ubuntu-latest
 
+    steps:
       - name: Dispatch Success Event
         if: ${{ success() }}
-        uses: peter-evans/repository_dispatch@v3
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.TOKEN_TO_TRIGGER }}
-          repository: olawaleade/chatapp
+          repository: olawaleade/helm
           event-type: success-event
           client-payload: '{"message": "Build and push successful"}'
