@@ -35,10 +35,15 @@ jobs:
           file: ./client/Dockerfile
           push: true
           tags: olawde/frontend:${{ steps.timestamp.outputs.timestamp }}
-          
+
+  trigger-repo-b:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Dispatch Success Event
-        if: ${{success() }}
-        uses: peter-evans/repository-dispatch@v3
+        if: ${{ success() }}
+        uses: peter-evans/repository_dispatch@v3
         with:
           token: ${{ secrets.TOKEN_TO_TRIGGER }}
           event-type: success-event
