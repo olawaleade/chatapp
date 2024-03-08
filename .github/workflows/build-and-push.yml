@@ -2,7 +2,7 @@ name: Build and Push Docker Images for Infra
 on:
   push:
     branches:
-      - main
+      - deploy
 
 jobs:
   build-and-push:
